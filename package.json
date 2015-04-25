@@ -1,9 +1,9 @@
 {
-  "name": "Research Paper Analysis Visualization",
+  "name": "",
   "version": "0.1.0",
-  "description": "Analyzing the differences and potential bias between three types of academia",
+  "description": "",
   "main": "app.js",
-  "author": "Chris Chan, Shantanu Dev, Vinh Ha, and William Xie",
+  "author": "Chris Chan",
   "private": true,
   "license": "BSD",
   "dependencies": {
