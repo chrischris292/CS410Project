@@ -76,7 +76,8 @@ function webScrapePlayers2014(){
 
 function googleQueryWrapper(player){
 	for(i in player){
-		googleQuery(player[i])
+		setTimeout(function() { googleQuery(player[i]) }, 1000); //slow down the requests so google doesnt block
+
 	}
 }
 function googleQuery(playerName){
