@@ -15,15 +15,16 @@ server.listen(port, function () {
 });
 
 app.use(express.static(__dirname + '/public'));
-main();
+app.get('/2012', function(req, res){
+   webScrapePlayers2012(res);
+});
+
 
 
 function main(){
-	webScrapePlayers2012(); // -> Google queries
-
 }
 
-function webScrapePlayers2012(){
+function webScrapePlayers2012(res){
 	player = []
 	url = "http://www.nba.com/history/2012-draft-history/index.html"
     request(url, function(error, response, html){
@@ -34,7 +35,6 @@ function webScrapePlayers2012(){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 
             var $ = cheerio.load(html);
-
             // Finally, we'll define the variables we're going to capture
 
             var title, release, rating;
@@ -45,13 +45,15 @@ function webScrapePlayers2012(){
 			    player.push($(this).text().split("   ")[2]);
 			   	playerSentiment[$(this).text().split("   ")[2]] = [];
 			});
+            res.status(200).send(player)
+
 			//because of async must call function after this:
-			googleQueryWrapper(player)
+			//googleQueryWrapper(player)
 		}
     })
 }
 //no idea why this doesnt work
-function webScrapePlayers2014(){
+function webScrapePlayers2014(res){
 	url = "http://www.nba.com/draft/2014/draftboard.html"
     request(url, function(error, response, html){
 
@@ -59,7 +61,6 @@ function webScrapePlayers2014(){
 
         if(!error){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-
             var $ = cheerio.load(html);
             // Finally, we'll define the variables we're going to capture
             var title, release, rating;
@@ -71,13 +72,15 @@ function webScrapePlayers2014(){
 			    console.log($(this));
 			});
 		}
+        else
+            console.log("ERROR")
+            console.log(error)
     })
 }
 
 function googleQueryWrapper(player){
 	for(i in player){
 		setTimeout(function() { googleQuery(player[i]) }, 1000); //slow down the requests so google doesnt block
-
 	}
 }
 function googleQuery(playerName){

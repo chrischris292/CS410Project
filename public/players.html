@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Drag and Drop Interaction Ideas | Modal</title>
+		<meta name="description" content="Inspiration for drag and drop interactions for the modern UI" />
+		<meta name="keywords" content="drag and drop, interaction, inspiration, web design, ui" />
+		<meta name="author" content="Codrops" />
+		<link rel="stylesheet" type="text/css" href="css/players/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="fonts/players/font-awesome-4.2.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/players/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/players/modal.css" />
+		<script src="scripts/players/modernizr.custom.js"></script>
+	</head>
+	<body class="skin-3">
+		<div class="container">
+			<div class="content">
+				<header class="codrops-header">
+					<h1>Choose a Player by Dragging<span>Based off of codrops UI</span></h1>
+
+				</header>
+				<div id="grid" class="grid clearfix">
+				</div>
+			</div><!-- /content -->
+		</div><!-- /container -->
+		<div id="drop-area" class="drop-area">
+			<div class="drop-area__item"></div>
+		</div>
+		<div class="drop-overlay"></div>
+		<script src="scripts/jquery.js"></script>
+		<script src="scripts/players/draggabilly.pkgd.min.js"></script>
+		<script src="scripts/players/dragdrop.js"></script>
+		<script>
+		function codropsStuff(){
+			(function() {
+				var body = document.body,
+					dropArea = document.getElementById( 'drop-area' ),
+					droppableArr = [], dropAreaTimeout;
+
+				// initialize droppables
+				[].slice.call( document.querySelectorAll( '#drop-area .drop-area__item' )).forEach( function( el ) {
+					droppableArr.push( new Droppable( el, {
+						onDrop : function( instance, draggableEl ) {
+							// show checkmark inside the droppabe element
+							classie.add( instance.el, 'drop-feedback' );
+							clearTimeout( instance.checkmarkTimeout );
+							instance.checkmarkTimeout = setTimeout( function() { 
+								window.location = "data.html?="+$(draggableEl).html();
+								classie.remove( instance.el, 'drop-feedback' );
+							}, 800 );
+							// ...
+						}
+					} ) );
+				} );
+
+				// initialize draggable(s)
+				[].slice.call(document.querySelectorAll( '#grid .grid__item' )).forEach( function( el ) {
+					new Draggable( el, droppableArr, {
+						draggabilly : { containment: document.body },
+						onStart : function() {
+							// add class 'drag-active' to body
+							classie.add( body, 'drag-active' );
+							// clear timeout: dropAreaTimeout (toggle drop area)
+							clearTimeout( dropAreaTimeout );
+							// show dropArea
+							classie.add( dropArea, 'show' );
+						},
+						onEnd : function( wasDropped ) {
+							var afterDropFn = function() {
+								// hide dropArea
+								classie.remove( dropArea, 'show' );
+								// remove class 'drag-active' from body
+								classie.remove( body, 'drag-active' );
+							};
+
+							if( !wasDropped ) {
+								afterDropFn();
+							}
+							else {
+								// after some time hide drop area and remove class 'drag-active' from body
+								clearTimeout( dropAreaTimeout );
+								dropAreaTimeout = setTimeout( afterDropFn, 400 );
+							}
+						}
+					} );
+				} );
+			})();
+
+		}
+//http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    console.log(vars["year"])
+     $.ajax("/"+vars["year"], {
+      type: 'GET',
+      success: function(data) {
+		console.log("Loaded player data")
+    	console.log(data)
+    	for (i in data){
+    		$("#grid").append('<div class="grid__item" style = "position: relative;">'+data[i]+'</div>');
+    	}
+    	codropsStuff();
+      },
+      error: function(error) {
+		console.log("ERROR")
+         console.log(error)
+      }
+   });
+
+		</script>
+	</body>
+</html>
