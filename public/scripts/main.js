@@ -7,13 +7,14 @@
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
     }
-    data = vars["player"].replace("%20"," ")
+    data = {"body":vars["player"].replace("%20"," ")}
+    console.log(data)
     $.ajax({
   type: "POST",
   url: "/player",
   data: data,
-  success: function(data){
-  	console.log(data)
+  success: function(result){
+  	console.log(result)
   }
 });
    

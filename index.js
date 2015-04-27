@@ -19,7 +19,8 @@ app.use(express.static(__dirname + '/public'));
 app.get('/2012', function(req, res){
    webScrapePlayers2012(res);
 });
-app.post('/', function (req, res) {
+app.post('/player', function (req, res) {
+    console.log(req.body)
   res.send('POST request to homepage');
 });
 
