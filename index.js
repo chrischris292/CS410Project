@@ -8,6 +8,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var google = require('google')
 var sentiment = require('sentiment');
+var bodyParser = require('body-parser')
 var playerSentiment = [];
 
 server.listen(port, function () {
@@ -18,7 +19,9 @@ app.use(express.static(__dirname + '/public'));
 app.get('/2012', function(req, res){
    webScrapePlayers2012(res);
 });
-
+app.post('/', function (req, res) {
+  res.send('POST request to homepage');
+});
 
 
 function main(){

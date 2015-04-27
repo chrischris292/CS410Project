@@ -47,7 +47,7 @@
 							classie.add( instance.el, 'drop-feedback' );
 							clearTimeout( instance.checkmarkTimeout );
 							instance.checkmarkTimeout = setTimeout( function() { 
-								window.location = "data.html?="+$(draggableEl).html();
+								window.location = "data.html?player="+$(draggableEl).html();
 								classie.remove( instance.el, 'drop-feedback' );
 							}, 800 );
 							// ...
