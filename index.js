@@ -9,25 +9,41 @@ var cheerio = require('cheerio');
 var google = require('google')
 var sentiment = require('sentiment');
 var bodyParser = require('body-parser')
+var bayes = require('bayes')
+var fs = require('fs')
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
 var playerSentiment = [];
+var classifier = bayes()
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
-
 app.use(express.static(__dirname + '/public'));
 app.get('/2012', function(req, res){
-   webScrapePlayers2012(res);
+    //webScrapePlayers2012(res);
+   webScrapePlayers2012API(res)
 });
 app.post('/player', function (req, res) {
     console.log(req.body)
-  res.send('POST request to homepage');
+  res.status(200).send('POST request to homepage');
 });
 
 
 function main(){
 }
 
+
+function webScrapePlayers2012API(res){
+fs.readFile('data/2012Players', 'utf8', function (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  res.send(data)
+});
+
+}
 function webScrapePlayers2012(res){
 	player = []
 	url = "http://www.nba.com/history/2012-draft-history/index.html"

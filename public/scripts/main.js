@@ -7,14 +7,19 @@
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
     }
-    data = {"body":vars["player"].replace("%20"," ")}
-    console.log(data)
+    postData = {"body":vars["player"].replace("%20"," ")}
+    postData = JSON.stringify(postData)
+    console.log(postData)
     $.ajax({
   type: "POST",
   url: "/player",
-  data: data,
+  data: postData,
+  contentType: "application/json",
   success: function(result){
   	console.log(result)
+  },
+  error: function(err){
+    console.log(err.responseText)
   }
 });
    
