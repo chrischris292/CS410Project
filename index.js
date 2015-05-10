@@ -10,39 +10,73 @@ var google = require('google')
 var sentiment = require('sentiment');
 var bodyParser = require('body-parser')
 var bayes = require('bayes')
+var client = require('google-images');
+
 var fs = require('fs')
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
 var playerSentiment = [];
-var classifier = bayes()
+var classifier = bayes();
+var playerImagesURLs = [];
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 app.use(express.static(__dirname + '/public'));
+
 app.get('/2012', function(req, res){
     //webScrapePlayers2012(res);
-   webScrapePlayers2012API(res)
+   playerAPI(2012,res)
+});
+app.get('/2013', function(req, res){
+    //webScrapePlayers2012(res);
+   playerAPI(2013,res)
+});
+
+app.get('/images', function(req, res){
+    //webScrapePlayers2012(res);
+    console.log(playerImagesURLs)
+   res.send(playerImagesURLs)
 });
 app.post('/player', function (req, res) {
     console.log(req.body)
   res.status(200).send('POST request to homepage');
 });
 
-
 function main(){
 }
-
-
-function webScrapePlayers2012API(res){
-fs.readFile('data/2012Players', 'utf8', function (err,data) {
+function testImages(){
+fs.readFile('data/2014Players', 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
-  res.send(data)
+
+  data = JSON.parse(data)
+    for (i in data) {
+     (function(ind) {
+         setTimeout(function(){
+                firstName = data[ind].player.first_name;
+                lastName = data[ind].player.last_name;
+                queryString = firstName + " " + lastName + " NBA headshot yahoo"
+                  client.search (queryString, function (err, images,query) {
+                    console.log(query)
+                    console.log(images[0].url)
+                    playerImagesURLs[query] = images[0].url;
+                  })
+         }, 1000 + (1000 * ind));
+     })(i);
+  }
+  //res.send(data)
 });
 
+}
+
+function playerAPI(year,res){
+  string = "data/"+year+"Players"
+  fs.readFile(string, 'utf8', function (err,data) {
+    res.send(data)
+  })
 }
 function webScrapePlayers2012(res){
 	player = []
