@@ -16,7 +16,7 @@ var fs = require('fs')
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-var playerSentiment = [];
+var playerSentiment = {};
 var classifier = bayes();
 var playerImagesURLs = [];
 
@@ -40,8 +40,7 @@ app.get('/images', function(req, res){
    res.send(playerImagesURLs)
 });
 app.post('/player', function (req, res) {
-    console.log(req.body)
-  res.status(200).send('POST request to homepage');
+  googleQuery(req.body.player,res)
 });
 
 function main(){
@@ -137,10 +136,11 @@ function googleQueryWrapper(player){
 		setTimeout(function() { googleQuery(player[i]) }, 1000); //slow down the requests so google doesnt block
 	}
 }
-function googleQuery(playerName){
-	google.resultsPerPage = 10
+function googleQuery(playerName,res){
+	google.resultsPerPage = 20
 	var nextCounter = 0
-
+  console.log(playerName + 'draft scouting report')
+  playerSentiment[playerName] = []
 	google(playerName + 'draft scouting report', function (err, next, links){
   if (err) console.error(err)
 
@@ -149,15 +149,24 @@ function googleQuery(playerName){
     console.log(links[i].description + "\n")
     article = links[i].title + " " + links[i].description;
     var result = sentiment(article);
-    //console.log(result.score)
-    playerSentiment[playerName].push(sentiment(article))
-
+    var dataTuple = { "title" : links[i].title,
+                      "description" : links[i].description,
+                      "sentiment" : result
+                    }
+    playerSentiment[playerName].push(dataTuple)
   }
-
   if (nextCounter < 4) {
     nextCounter += 1
-    if (next) next()
+    if (next){
+      setTimeout(function(){next()},1000) //stop from getting blocked by google
+    } 
+      else if (playerSentiment[playerName].length>10){
+        console.log("DONE")
+        //query finished
+        //res.send(playerSentiment)
+      }
   }
+
 })
 //abc test
 }

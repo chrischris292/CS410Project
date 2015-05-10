@@ -7,22 +7,16 @@
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
     }
-    postData = {"body":vars["player"].replace("%20"," ")}
-    postData = JSON.stringify(postData)
+    postData = {"player":vars["player"].replace("%20"," ")}
     console.log(postData)
-    $.ajax({
-  type: "POST",
-  url: "/player",
-  data: postData,
-  contentType: "application/json",
-  success: function(result){
-  	console.log(result)
-  },
-  error: function(err){
-    console.log(err.responseText)
-  }
-});
-   
+  $.post("/player",postData, function(data){
+    console.log(data)
+    if(data==='done')
+      {
+        alert("login success");
+      }
+  });
+
 /*$.ajax("/2012", {
       type: 'GET',
       success: function(data) {

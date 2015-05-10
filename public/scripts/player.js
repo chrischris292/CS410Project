@@ -35,7 +35,7 @@ $.ajax(imageLoad, {
 			for(player in imageDict){
 				name = player.split("<br/>")[0].replace(" ","_")
 				name = "/data.html?player="+name;
-				$(".row").append(' <div class="col s1 m3"> <div class="card large"> <div class="card-image"> <img src="'+imageDict[player]+'"> </div> <div class = "card-content"><p>'+player+'</p></div><div class="card-action"> <a href="#">This is a link</a> <a href="'+name+'">This is a link</a> </div> </div> </div> ');
+				$(".row").append(' <div class="col s1 m3"> <div class="card large"> <div class="card-image"> <img src="'+imageDict[player]+'"> </div> <div class = "card-content"><p>'+player+'</p></div><div class="card-action" style = "text-align: center"> <a href="'+name+'">Select Player</a> </div> </div> </div> ');
 			
 			}
 		},
