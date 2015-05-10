@@ -33,6 +33,10 @@ app.get('/2013', function(req, res){
     //webScrapePlayers2012(res);
    playerAPI(2013,res)
 });
+app.get('/2014', function(req, res){
+    //webScrapePlayers2012(res);
+   playerAPI(2014,res)
+});
 
 app.get('/images', function(req, res){
     //webScrapePlayers2012(res);
@@ -163,7 +167,7 @@ function googleQuery(playerName,res){
       else if (playerSentiment[playerName].length>10){
         console.log("DONE")
         //query finished
-        //res.send(playerSentiment)
+        res.send(playerSentiment)
       }
   }
 
