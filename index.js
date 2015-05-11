@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var playerSentiment = {};
 var classifier = bayes();
 var playerImagesURLs = [];
+var currYear = null;
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
@@ -27,14 +28,18 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/2012', function(req, res){
     //webScrapePlayers2012(res);
+    currYear = 2012;
    playerAPI(2012,res)
 });
 app.get('/2013', function(req, res){
     //webScrapePlayers2012(res);
+    currYear = 2013;
    playerAPI(2013,res)
 });
 app.get('/2014', function(req, res){
     //webScrapePlayers2012(res);
+    currYear = 2014;
+
    playerAPI(2014,res)
 });
 
@@ -45,6 +50,9 @@ app.get('/images', function(req, res){
 });
 app.post('/player', function (req, res) {
   googleQuery(req.body.player,res)
+});
+app.post('/year', function (req, res) {
+  generateSentimentByYear(req.body.year,res)
 });
 
 function main(){
@@ -135,13 +143,67 @@ function webScrapePlayers2014(res){
     })
 }
 
-function googleQueryWrapper(player){
-	for(i in player){
-		setTimeout(function() { googleQuery(player[i]) }, 1000); //slow down the requests so google doesnt block
-	}
+function generateSentimentByYear(year,res){
+    string = "data/"+year+"Players"
+    ind;
+  fs.readFile(string, 'utf8', function (err,data) {
+      sentimentData = {};
+      data = JSON.parse(data)
+      for(i in data){
+             (function(ind) {
+                setTimeout(function() {
+
+                sentimentByPlayer(data[ind].player.display_name,sentimentData) 
+              }, 1000 + (6000 * ind));
+              })(i);
+      }
+      if(ind ==59)
+      {
+        console.log("WE FINISHED")
+        res.send(sentimentData)
+      }
+      /*for(i in player){
+        setTimeout(function() { sentimentByPlayer(player[i],sentimentData) }, 1000); //slow down the requests so google doesnt block
+      }
+      res.send(sentimentData)*/
+  })
 }
+function sentimentByPlayer(playerName,sentimentData){
+    console.log(playerName)
+    google.resultsPerPage = 40
+    var nextCounter = 0
+    console.log(playerName + 'draft scouting report')
+    sentimentData[playerName] = []
+    countLinks = 0;
+
+    //google query
+    google(playerName + 'draft scouting report', function (err, next, links){
+    if (err) console.error(err)
+
+    for (var i = 0; i < links.length; ++i) {
+      article = links[i].title + " " + links[i].description;
+      var result = sentiment(article);
+      sentimentData[playerName] +=result;
+    }
+    countLinks +=links.length;
+    if (nextCounter < 4) {
+      nextCounter += 1
+      if (next){
+        setTimeout(function(){next()},1500) //stop from getting blocked by google
+        console.log(sentimentData)
+      } 
+    }
+    else{ //we finished :D
+      console.log("DONE")
+      sentimentData[playerName] = sentimentData[playerName]/countLinks;
+      console.log(sentimentData)
+    }
+
+  })
+}
+
 function googleQuery(playerName,res){
-	google.resultsPerPage = 20
+	google.resultsPerPage = 40
 	var nextCounter = 0
   console.log(playerName + 'draft scouting report')
   playerSentiment[playerName] = []
@@ -149,8 +211,6 @@ function googleQuery(playerName,res){
   if (err) console.error(err)
 
   for (var i = 0; i < links.length; ++i) {
-    console.log(links[i].title) // link.href is an alias for link.link
-    console.log(links[i].description + "\n")
     article = links[i].title + " " + links[i].description;
     var result = sentiment(article);
     var dataTuple = { "title" : links[i].title,
@@ -162,13 +222,13 @@ function googleQuery(playerName,res){
   if (nextCounter < 4) {
     nextCounter += 1
     if (next){
-      setTimeout(function(){next()},1000) //stop from getting blocked by google
+      setTimeout(function(){next()},1500) //stop from getting blocked by google
     } 
-      else if (playerSentiment[playerName].length>10){
-        console.log("DONE")
-        //query finished
-        res.send(playerSentiment)
-      }
+  }
+  else{ //we finished :D
+    console.log("DONE")
+    //query finished
+    res.send(playerSentiment)
   }
 
 })
