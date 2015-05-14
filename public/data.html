@@ -21,52 +21,7 @@
         <div class = "date">CS 410 - Text Information Systems Project</div>
     </div>
 </div>
-<div class = "container">
-    <h1>Introduction</h1>
-    <line class = "other"></line>
-    <p>    
-        Inspired by the research papers that we critiqued in class, we set out with the goal to discover potential patterns or biases in different areas of academia. 
-        We created a research paper data set by aggregating articles for areas of academia including Computer Science, Biology, and Psychology. For each academic area, we have three subcategories which split the data further. Afterwards, we applied sentiment analysis and similarity algorithms to the papers to draw comparisons between the subjects.
-    </p>
-
-    <h1>Neutrality in Academic Areas</h1>
-    <line class = "other"></line>
-    <p>    
-        Our goal was to see which academic area is the most neutral in terms of written style. Using sentiment analysis tools, we calculated an average neutrality score on a scale from 0 to 1 where 0 represents the least neutral and 1 represents the most neutral. We ran analysis on both the full texts of the research papers for each category as well as a summarized version of the text.
-    </p>
-    <p>
-        In terms of neutrality, we found academic papers in Biology had higher scores compared to Computer Science and Psychology. The summarized versions of the papers resulted in lower neutrality scores overall. This may be attributed to the fact that the summary tools focused on parts of the papers where data was explained rather than given, though it is important to note that not all summary tools are perfect in capturing the ideas behind each paper.
-    </p>
-
-    <p>
-        Along with the neutrality score, there is a polarity score broken down into negative and positive polarity. The scores also range from 0 to 1, where 0 represents the least polar and 1 the most. The sum of the negative and positive polarity scores equal 1. Only papers that are deemed more polar than neutral are given a polarity score. For our analysis, we converted this number to a percentage to more easily compare the difference in sentiment.
-    </p>
-    <p>
-        We see that for papers with polarity scores, there is mostly a positive sentiment involved, especially surrounding Psychology papers. In particular, a subcategory we chose for Psychology, Social Psychology, had high, positive polarity scores. Like most of the papers in that realm, it mostly deals with emotion and feelings which likely attributed to the higer percentage as seen. It is also interesting to see that the polar percentage of Biology research papers is relatively even when it is deemed polar. 
-    </p>
-    <p>Looking at the distribution of papers as a whole, we see that Psychology papers have a higher Polar to Neutral ratio compared to other subjects. The sentiment analysis tool rounds the polar values to the nearest tenths place, which is why we see incremental levels rather than exact numbers. It should also be noted that there does exist a linear correlation because the polar score + neutral score = 1.</p>
-    <!--
-    <h1>Maps</h1>
-    <line class = "other"></line>
-    <p>    
-        In this section, we plan to visualize which universities release more academia for each section. 
-    </p>
-    </p>
-    <div id = "map_election"></div>
-    -->
-    <h1>Journals and Impact Factors</h1>
-    <line class = "other"></line>
-    <p>To go deeper into our data set, we looked into the impact factor (IF) of the academic journal hosting the article. The impact factor is a measure that illustrates the number of citations to articles published in the journal. We used this factor and compared it with the polarity of the article to detect potential bias in journals.</p>
-    <p>
-    </p>
-
-    <h1>Future Work</h1>
-    <line class = "other"></line>
-    <p>
-        We would love to see how this data matches up against an even larger data set and among other academic subjects as well. One subject in particular, History, would be interesting to analyze due to the subjectivity. Subcategories could be explored further for a certain subject. In our data, we noticed that research involving human computer interaction and data visualization had higher polarity scores than other subcategories in Computer Science, but with our data set we could not completely draw conclusions.
-    </p>
-    <line class = "other"></line>
-    <p>***</p>
+   
 </div>
 </body>
 <script src = "scripts/jquery.js"></script>

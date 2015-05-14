@@ -1,5 +1,5 @@
 //http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
-   /* var vars = [], hash;
+    var vars = [], hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
     for(var i = 0; i < hashes.length; i++)
     {
@@ -11,15 +11,6 @@
     console.log(postData)
 
   $.post("/player",postData, function(data){
-    console.log(data)
-    if(data==='done')
-      {
-        alert("login success");
-      }
-  });*/
-  postData = {"year":2012}
-
- $.post("/year",postData, function(data){
     console.log(data)
     if(data==='done')
       {
