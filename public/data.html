@@ -3,8 +3,8 @@
     <!-- Basic Page Needs -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Academic Research Paper Data Visualization</title>
-    <meta name="description" content="A CS 467 Final Project Visualizing Academic Research Papers">
+    <title>Media Perception vs. NBA Player Performance</title>
+    <meta name="description" content="A CS 410 Final Project Performing Sentiment Analysis on Media Portrayal of NBA Players">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,33 +18,25 @@
         <line></line>
         <div class = "subTitle">Finding relationships between media perception and NBA Player performance</div>
         <div class = "authors"> Christopher Chan, Lucas Ung, Arjun Sharma</div>
-        <div class = "date">CS 410 - Text Information Systems Project</div>
+        <div class = "date">CS 410 - Text Information Systems Final Project</div>
     </div>
 </div>
 <div class = "container">
     <h1>Introduction</h1>
     <line class = "other"></line>
     <p>    
-        Inspired by the research papers that we critiqued in class, we set out with the goal to discover potential patterns or biases in different areas of academia. 
-        We created a research paper data set by aggregating articles for areas of academia including Computer Science, Biology, and Psychology. For each academic area, we have three subcategories which split the data further. Afterwards, we applied sentiment analysis and similarity algorithms to the papers to draw comparisons between the subjects.
+        Sentiment analysis is a technique to extract opinionated information from a text.  It uses a combination of natural language processing (NLP), text analysis, and  The goal of the project was to perform sentiment analysis on potential NBA players’ scouting reports prior to them being drafted and compare that to their performance in the NBA.  This will allow us to look for patterns and and make judgements about how effective pre-draft scouting reports and the media’s perception of the player is at predicting success in the NBA.  Our data will be scraped off of the internet; this includes the pre-draft scouting reports, news articles about the specific players, player headshots, as well as their stats after playing in the NBA.  This will be presented as a web application in which the user can select the draft year and then the player to get results for.
     </p>
 
-    <h1>Neutrality in Academic Areas</h1>
+    <h1>Conclusions</h1>
     <line class = "other"></line>
     <p>    
-        Our goal was to see which academic area is the most neutral in terms of written style. Using sentiment analysis tools, we calculated an average neutrality score on a scale from 0 to 1 where 0 represents the least neutral and 1 represents the most neutral. We ran analysis on both the full texts of the research papers for each category as well as a summarized version of the text.
+        The goal of this project is to determine a quantifiable way to measure the accuracy of scouting reports and media portrayals of players in terms of how they predict success in the NBA.  The metric used to measure media portrayals used was a sentiment score obtained from the analysis of articles and scouting reports on the player.  These scores ranged between -2 and 8.  Positive and negative sentiment scores correspond to positive and negative media portrayals, respectively.  To measure player performance, we used Player Efficiency Ratings (PER).  This is an all-encompassing metric that takes a multitude of other statistics into account.  An average player will have a PER score of 12 to 15 while a very good player will have a score in the mid to high 20's.
     </p>
     <p>
-        In terms of neutrality, we found academic papers in Biology had higher scores compared to Computer Science and Psychology. The summarized versions of the papers resulted in lower neutrality scores overall. This may be attributed to the fact that the summary tools focused on parts of the papers where data was explained rather than given, though it is important to note that not all summary tools are perfect in capturing the ideas behind each paper.
+        In general, we found that the more positive a player's sentiment score was, the better the performed.  Some exceptions to this include players who had off-court incidents and violations such as drug or crime problems.  These caused severe media backlash and had a significant negative impact on their sentiment score, even though in some cases, they performed very well on the court.  As with any kind of prediction, there is always some level of uncertainty and player scouting is no different.  Some players with very high sentiment scores underperformed, and some players with low sentiment scores played very well.
     </p>
 
-    <p>
-        Along with the neutrality score, there is a polarity score broken down into negative and positive polarity. The scores also range from 0 to 1, where 0 represents the least polar and 1 the most. The sum of the negative and positive polarity scores equal 1. Only papers that are deemed more polar than neutral are given a polarity score. For our analysis, we converted this number to a percentage to more easily compare the difference in sentiment.
-    </p>
-    <p>
-        We see that for papers with polarity scores, there is mostly a positive sentiment involved, especially surrounding Psychology papers. In particular, a subcategory we chose for Psychology, Social Psychology, had high, positive polarity scores. Like most of the papers in that realm, it mostly deals with emotion and feelings which likely attributed to the higer percentage as seen. It is also interesting to see that the polar percentage of Biology research papers is relatively even when it is deemed polar. 
-    </p>
-    <p>Looking at the distribution of papers as a whole, we see that Psychology papers have a higher Polar to Neutral ratio compared to other subjects. The sentiment analysis tool rounds the polar values to the nearest tenths place, which is why we see incremental levels rather than exact numbers. It should also be noted that there does exist a linear correlation because the polar score + neutral score = 1.</p>
     <!--
     <h1>Maps</h1>
     <line class = "other"></line>
@@ -54,16 +46,19 @@
     </p>
     <div id = "map_election"></div>
     -->
-    <h1>Journals and Impact Factors</h1>
+   <!--  <h1>Journals and Impact Factors</h1>
     <line class = "other"></line>
     <p>To go deeper into our data set, we looked into the impact factor (IF) of the academic journal hosting the article. The impact factor is a measure that illustrates the number of citations to articles published in the journal. We used this factor and compared it with the polarity of the article to detect potential bias in journals.</p>
     <p>
-    </p>
+    </p> -->
 
     <h1>Future Work</h1>
     <line class = "other"></line>
     <p>
-        We would love to see how this data matches up against an even larger data set and among other academic subjects as well. One subject in particular, History, would be interesting to analyze due to the subjectivity. Subcategories could be explored further for a certain subject. In our data, we noticed that research involving human computer interaction and data visualization had higher polarity scores than other subcategories in Computer Science, but with our data set we could not completely draw conclusions.
+        Another cool idea to think about in the future, is to be able to grade a specific scout’s ability to write an accurate scouting report for a player entering the NBA draft. A measure like this could change the entire scouting industry, as it would make scouts much more responsible for the veracity of their claims if there was a firm, quantifiable method to confirm or contradict the content of their scouting reports. Also, our analysis shows that there is definitely a way to cross the bridge from older, more traditional metrics to newer methods of analytics in the NBA. 
+    </p>
+    <p>
+        The bulk of this project can be easily adapted to find correlations to other basketball metrics and even other sports too.  For instance, instead of analyzing all players, we could look only at players at a particular position (i.e. only look at point guards and their assist-to-turnover ratio or only look at centers and their defensive win shares).  Combining this with the aforementioned extension could create a method to systematically classify scouts based on what positions they evaluate best.  Furthermore, topic analysis could be used to see if there was a pattern betweens players associated with certain things (i.e. performance enhancing drugs or charity work) and certain statistics.  Finally, this program can be extended to other sports as well.  Adapting the code to analyze correlations between the media and scouts perceptions of NFL players and their on-field performance would simply involve changing the sources that we scrape data from and making the front-end design NFL oriented. 
     </p>
     <line class = "other"></line>
     <p>***</p>
