@@ -145,7 +145,7 @@ function webScrapePlayers2014(res){
 
 function generateSentimentByYear(year,res){
     string = "data/"+year+"Players"
-    ind;
+    ind = 0;
   fs.readFile(string, 'utf8', function (err,data) {
       sentimentData = {};
       data = JSON.parse(data)
